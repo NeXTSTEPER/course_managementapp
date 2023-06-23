@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Courses</title>
+    <style>
+     body {
+        background-color: #F5F5DC;
+        font-family: 'Roboto', sans-serif;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        color: #FF6347;
+        text-align: center;
+        padding: 20px;
+    }
+
+    ol {
+        list-style-position: inside;
+        margin: 0 auto;
+        width: 80%;
+        padding: 20px;
+    }
+
+    li {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    li:hover {
+        background-color: #FFA500;
+    }
+
+    span {
+        display: block;
+        text-align: center;
+    }
+
+    span:first-child {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+
+    .edit-button, .delete-button {
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    .edit-button {
+        background-color: #008CBA; /* Blue */
+    }
+
+    .delete-button {
+        background-color: #f44336; /* Red */
+    }
+
+    .edit-button:hover, .delete-button:hover {
+        opacity: 0.8;
+    }
+
+</style>
+</head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<body>
+<h1><a href="/welcome">All Courses</a></h1>
+
+<ol>
+    <li th:each="course : ${courses}">
+        <h2>Course Title</h2><span th:text="${course.title}"></span> 
+        <h2>Description</h2> <span th:text="${course.description}"></span>
+        <button class="edit-button" th:data-id="${course.id}">Edit</button>
+        <button class="delete-button" th:data-id="${course.id}">Delete</button>
+    </li>
+</ol>
+<script>
+    $(document).ready(function() {
+        $(".delete-button").click(function() {
+            var id = $(this).data("id");
+            $.ajax({
+                url: "/courses/" + id,
+                method: "DELETE",
+                success: function() {
+                    location.reload();  // reload the page to update the course list
+                }
+            });
+        });
+
+        $(".edit-button").click(function() {
+            var id = $(this).data("id");
+            // Navigate to the course edit page
+            window.location.href = "/courses/edit/" + id;
+        });
+    });
+</script>
+</body>
+</html>

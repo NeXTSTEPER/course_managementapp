@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add Course</title>
+    <style>
+    
+     body {
+        background-color: #F5F5DC;
+        font-family: 'Roboto', sans-serif;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        color: #FF6347;
+        text-align: center;
+        padding: 20px;
+    }
+
+    form {
+        width: 80%;
+        margin: 0 auto;
+        padding: 20px;
+
+        border-radius: 5px;
+    }
+
+    label {
+        display: block;
+        margin-top: 20px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 5px;
+        border: none;
+    }
+
+    input[type="submit"] {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        background-color: #008CBA;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+        opacity: 0.8;
+    }
+    </style>
+   
+</head>
+<body>
+<h1>Add Course</h1>
+<form action="#" th:action="@{/courses}" th:object="${course}" method="post" onsubmit="validateForm(event)">
+    <label for="title">Course Title:</label><br>
+    <input type="text" id="title" name="title" th:field="*{title}"><br>
+    <label for="description">Course Description:</label><br>
+    <input type="text" id="description" name="description" th:field="*{description}"><br>
+    <input type="submit" value="Submit">
+</form>
+<p id="error" style="color: red; display: none; text-align: center;">All fields must be filled out.</p> <script>
+ function validateForm(event) {
+     var title = document.getElementById('title').value;
+     var description = document.getElementById('description').value;
+     var errorMessage = document.getElementById('error');
+
+     if (title == "" || description == "") {
+         errorMessage.style.display = 'block'; // show error message
+         event.preventDefault(); // prevent form submission
+     } else {
+         errorMessage.style.display = 'none'; // hide error message
+     }
+ }
+    </script>
+</body>
+</html>
